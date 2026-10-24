@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#f2e8d9">
 <meta name="color-scheme" content="only light">
-<title>Are you interested in the Ethiopian Bible?</title>
+<title>The Ethiopian Bible</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
@@ -69,9 +69,9 @@ fbq('track', 'PageView');
   <div class="card">
     <p class="eyebrow">The Faith Made</p>
     <div class="rule"></div>
-    <h1>Are you interested in the Ethiopian Bible?</h1>
-    <p class="sub">The complete Ethiopian canon. The books the Western Bible left out, bound in one volume.</p>
-    <a class="go" id="go" href="#" aria-disabled="true">Yes, I'm interested</a>
+    <h1>The Ethiopian Bible</h1>
+    <p class="sub">The complete Ethiopian canon. The books the Western Bible left out, bound in one volume. Emily texts you the page.</p>
+    <a class="go" id="go" href="#" aria-disabled="true">Text me the page</a>
   </div>
 </main>
 <noscript><img height="1" width="1" style="display:none" alt=""
@@ -81,7 +81,9 @@ var go = document.getElementById('go');
 var ready = false;
 function arm(cfg) {
   if (!cfg || !cfg.enabled || !cfg.sms_number || !cfg.sms_body) return;
-  go.href = 'sms:' + cfg.sms_number + '?&body=' + encodeURIComponent(cfg.sms_body);
+  var body = cfg.sms_body;
+  if (body.toLowerCase().indexOf('send me the page') === -1) body += ' send me the page';
+  go.href = 'sms:' + cfg.sms_number + '?&body=' + encodeURIComponent(body);
   go.removeAttribute('aria-disabled');
   ready = true;
 }
