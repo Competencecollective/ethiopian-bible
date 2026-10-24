@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>The Ethiopian Bible</title>
+<meta name="theme-color" content="#f2e8d9">
+<meta name="color-scheme" content="only light">
+<title>Are you interested in the Ethiopian Bible?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -15,47 +20,85 @@ fbq('init', '1566647111816717');
 fbq('track', 'PageView');
 </script>
 <style>
-  html, body { margin: 0; background: #f4efe6; color: #1c1915;
-    font-family: Georgia, "Iowan Old Style", Palatino, serif; }
-  main { max-width: 26rem; margin: 0 auto; padding: 18vh 1.4rem 4rem; text-align: center; }
-  .brand { letter-spacing: .22em; text-transform: uppercase; font-size: .72rem;
-    font-family: "Avenir Next", "Segoe UI", sans-serif; color: #8a8175; margin: 0 0 1.6rem; }
-  h1 { font-weight: 500; font-size: 2.4rem; line-height: 1.15; margin: 0; }
-  p.lead { font-size: 1.15rem; line-height: 1.45; color: #3f382f; margin: 1.1rem 0 2rem; }
-  a.go { display: inline-block; background: #1c1915; color: #f4efe6; text-decoration: none;
-    font-family: "Avenir Next", "Segoe UI", sans-serif; font-size: 1.05rem;
-    padding: .95rem 1.6rem; border-radius: 999px; }
-  .desk, .msg { font-family: "Avenir Next", "Segoe UI", sans-serif;
-    font-size: .92rem; color: #5c564e; line-height: 1.45; }
-  .desk { margin: 2.2rem 0 .4rem; }
-  .msg { margin: 0 auto; max-width: 18rem; }
+  :root {
+    --cream:#f2e8d9; --cream-2:#e7dcc8; --card:#fffbf7; --card-2:#fcf6e5;
+    --bronze:#ad803c; --bronze-deep:#8f682f; --bronze-soft:#c0a077;
+    --tan:#cbbb9f; --ink-2:#342c23; --ink-3:#453b31; --brown:#78583f;
+  }
+  html, body { margin: 0; }
+  body {
+    min-height: 100svh; display: flex; align-items: flex-start; justify-content: center;
+    color: var(--ink-2); background:
+      radial-gradient(120% 90% at 50% -10%, #fffdf8 0%, var(--cream) 45%, var(--cream-2) 100%) var(--cream);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding: calc(24px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+  main { width: 100%; max-width: 620px; margin: auto 0; }
+  .card {
+    background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
+    border: 1px solid var(--tan); border-radius: 20px; text-align: center;
+    padding: 44px 34px 38px;
+    box-shadow: 0 1px 0 #fff inset, 0 18px 38px -20px rgba(35,31,32,.38);
+  }
+  .eyebrow {
+    font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
+    color: var(--bronze-deep); margin: 0 0 18px;
+  }
+  .rule {
+    height: 1px; width: min(280px, 72%); margin: 0 auto 26px;
+    background: linear-gradient(90deg, transparent, var(--bronze-soft) 22%, var(--bronze) 50%, var(--bronze-soft) 78%, transparent);
+  }
+  h1 {
+    font-family: "Cormorant Garamond", Georgia, serif; font-weight: 700; color: var(--ink-3);
+    font-size: clamp(30px, 6.6vw, 46px); line-height: 1.14; margin: 0 0 16px;
+  }
+  .sub { font-size: 16.5px; line-height: 1.6; color: var(--brown); margin: 0 auto 30px; max-width: 42ch; }
+  a.go {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 100%; max-width: 280px; box-sizing: border-box;
+    border-radius: 999px; padding: 17px 30px; font-size: 16px; font-weight: 700;
+    text-decoration: none; color: #fffdf7;
+    background: linear-gradient(180deg, var(--bronze-deep), #7d5a26);
+    box-shadow: 0 10px 22px -10px rgba(143,104,47,.9), 0 1px 0 rgba(255,255,255,.28) inset;
+  }
+  a.go[aria-disabled="true"] { opacity: .55; }
 </style>
 </head>
 <body>
 <main>
-  <p class="brand">Faith Made</p>
-  <h1>The Ethiopian Bible</h1>
-  <p class="lead">Want the page? One tap and Emily texts it to you.</p>
-  <a class="go" id="go" href="sms:+16469430451?&amp;body=Hi%21%20I%27m%20interested%20in%20the%20Ethiopian%20Bible%20%28%23YNBEZ%29">Text me the page</a>
-  <p class="desk">On a computer, text <b id="num">+16469430451</b> and send exactly:</p>
-  <p class="msg" id="msg">Hi! I'm interested in the Ethiopian Bible (#YNBEZ)</p>
+  <div class="card">
+    <p class="eyebrow">The Faith Made</p>
+    <div class="rule"></div>
+    <h1>Are you interested in the Ethiopian Bible?</h1>
+    <p class="sub">The complete Ethiopian canon. The books the Western Bible left out, bound in one volume.</p>
+    <a class="go" id="go" href="#" aria-disabled="true">Yes, I'm interested</a>
+  </div>
 </main>
 <noscript><img height="1" width="1" style="display:none" alt=""
   src="https://www.facebook.com/tr?id=1566647111816717&ev=PageView&noscript=1"></noscript>
 <script>
-document.getElementById('go').addEventListener('click', function () {
+var go = document.getElementById('go');
+var ready = false;
+function arm(cfg) {
+  if (!cfg || !cfg.enabled || !cfg.sms_number || !cfg.sms_body) return;
+  go.href = 'sms:' + cfg.sms_number + '?&body=' + encodeURIComponent(cfg.sms_body);
+  go.removeAttribute('aria-disabled');
+  ready = true;
+}
+function load() {
+  return fetch('https://zobi.com/moneybag/sms/support/faithmade/config', { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(arm);
+}
+load();
+go.addEventListener('click', function (e) {
+  if (!ready) {
+    e.preventDefault();
+    load().then(function () { if (ready) window.location.href = go.href; });
+    return;
+  }
   if (window.fbq) fbq('track', 'Lead');
 });
-fetch('https://zobi.com/moneybag/sms/support/faithmade/config', { cache: 'no-store' })
-  .then(function (r) { return r.json(); })
-  .then(function (cfg) {
-    if (!cfg || !cfg.enabled || !cfg.sms_number || !cfg.sms_body) return;
-    var go = document.getElementById('go');
-    go.href = 'sms:' + cfg.sms_number + '?&body=' + encodeURIComponent(cfg.sms_body);
-    document.getElementById('num').textContent = cfg.sms_number;
-    document.getElementById('msg').textContent = cfg.sms_body;
-  })
-  .catch(function () {});
 </script>
 </body>
 </html>
