@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>The Ethiopian Bible</title>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1566647111816717');
+fbq('track', 'PageView');
+</script>
+<style>
+  html, body { margin: 0; background: #f4efe6; color: #1c1915;
+    font-family: Georgia, "Iowan Old Style", Palatino, serif; }
+  main { max-width: 26rem; margin: 0 auto; padding: 18vh 1.4rem 4rem; text-align: center; }
+  .brand { letter-spacing: .22em; text-transform: uppercase; font-size: .72rem;
+    font-family: "Avenir Next", "Segoe UI", sans-serif; color: #8a8175; margin: 0 0 1.6rem; }
+  h1 { font-weight: 500; font-size: 2.4rem; line-height: 1.15; margin: 0; }
+  p.lead { font-size: 1.15rem; line-height: 1.45; color: #3f382f; margin: 1.1rem 0 2rem; }
+  a.go { display: inline-block; background: #1c1915; color: #f4efe6; text-decoration: none;
+    font-family: "Avenir Next", "Segoe UI", sans-serif; font-size: 1.05rem;
+    padding: .95rem 1.6rem; border-radius: 999px; }
+  .desk, .msg { font-family: "Avenir Next", "Segoe UI", sans-serif;
+    font-size: .92rem; color: #5c564e; line-height: 1.45; }
+  .desk { margin: 2.2rem 0 .4rem; }
+  .msg { margin: 0 auto; max-width: 18rem; }
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">Faith Made</p>
+  <h1>The Ethiopian Bible</h1>
+  <p class="lead">Want the page? One tap and Emily texts it to you.</p>
+  <a class="go" id="go" href="sms:+16469430451?&amp;body=Hi%21%20I%27m%20interested%20in%20the%20Ethiopian%20Bible%20%28%23YNBEZ%29">Text me the page</a>
+  <p class="desk">On a computer, text <b id="num">+16469430451</b> and send exactly:</p>
+  <p class="msg" id="msg">Hi! I'm interested in the Ethiopian Bible (#YNBEZ)</p>
+</main>
+<noscript><img height="1" width="1" style="display:none" alt=""
+  src="https://www.facebook.com/tr?id=1566647111816717&ev=PageView&noscript=1"></noscript>
+<script>
+document.getElementById('go').addEventListener('click', function () {
+  if (window.fbq) fbq('track', 'Lead');
+});
+fetch('https://zobi.com/moneybag/sms/support/faithmade/config', { cache: 'no-store' })
+  .then(function (r) { return r.json(); })
+  .then(function (cfg) {
+    if (!cfg || !cfg.enabled || !cfg.sms_number || !cfg.sms_body) return;
+    var go = document.getElementById('go');
+    go.href = 'sms:' + cfg.sms_number + '?&body=' + encodeURIComponent(cfg.sms_body);
+    document.getElementById('num').textContent = cfg.sms_number;
+    document.getElementById('msg').textContent = cfg.sms_body;
+  })
+  .catch(function () {});
+</script>
+</body>
+</html>
