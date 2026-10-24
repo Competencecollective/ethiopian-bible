@@ -84,12 +84,12 @@ fbq('track', 'PageView');
     <div class="rule"></div>
     <div id="ask">
       <h1>The books they left out of the Bible.</h1>
-      <p class="sub">The complete Ethiopian canon, bound in one volume. A member of our team will personally text you the page.</p>
+      <p class="sub">A member of our team will personally reach out and text you the page. The complete Ethiopian canon. The books the Western Bible left out, in one volume.</p>
       <form id="form">
         <input type="text" id="name" name="name" autocomplete="given-name" placeholder="First name" maxlength="80" required>
         <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="(555) 123-4567" maxlength="24" required>
         <label class="consent"><input type="checkbox" id="consent"> A member of the team can text me about this. Reply STOP to end.</label>
-        <button type="submit" id="go">Have them text me</button>
+        <button type="submit" id="go">Text me the page</button>
         <p class="err" id="err"></p>
       </form>
     </div>
@@ -123,29 +123,40 @@ form.addEventListener('submit', function (e) {
   var utm = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
     .map(function (k) { return params.get(k) ? k + '=' + params.get(k) : ''; })
     .filter(Boolean).join('&');
-  fetch('https://www.competencecollective.com/api/faithmade-lead', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
-      name: name, phone: phone, consent: true,
-      referrer: document.referrer || '', utm: utm
-    })
-  }).then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
-    .then(function (j) {
-      if (j && j.ok) {
+  var doors = [
+    'https://www.competencecollective.com/api/faithmade-lead',
+    'https://house-agricultural-journals-jungle.trycloudflare.com/'
+  ];
+  function send(i) {
+    if (i >= doors.length) {
+      err.textContent = 'Connection hiccup. Try once more.';
+      go.disabled = false;
+      go.textContent = 'Text me the page';
+      return;
+    }
+    fetch(doors[i], {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        name: name, phone: phone, consent: true,
+        referrer: document.referrer || '', utm: utm
+      })
+    }).then(function (r) {
+      return r.json().then(function (j) { return j; }, function () { return null; });
+    }).then(function (j) {
+      if (!j || typeof j.ok !== 'boolean') { send(i + 1); return; }
+      if (j.ok) {
         if (window.fbq) fbq('track', 'Lead');
         document.getElementById('ask').style.display = 'none';
         document.getElementById('done').style.display = 'block';
         return;
       }
-      err.textContent = (j && j.error) || 'That did not go through. Try once more.';
+      err.textContent = j.error || 'That did not go through. Try once more.';
       go.disabled = false;
-      go.textContent = 'Have them text me';
-    }).catch(function () {
-      err.textContent = 'Connection hiccup. Try once more.';
-      go.disabled = false;
-      go.textContent = 'Have them text me';
-    });
+      go.textContent = 'Text me the page';
+    }).catch(function () { send(i + 1); });
+  }
+  send(0);
 });
 </script>
 </body>
