@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#f2e8d9">
 <meta name="color-scheme" content="only light">
-<title>The Ethiopian Bible</title>
+<title>The books they left out of the Bible</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
@@ -37,7 +37,7 @@ fbq('track', 'PageView');
   .card {
     background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
     border: 1px solid var(--tan); border-radius: 20px; text-align: center;
-    padding: 44px 34px 38px;
+    padding: 44px 28px 32px;
     box-shadow: 0 1px 0 #fff inset, 0 18px 38px -20px rgba(35,31,32,.38);
   }
   .eyebrow {
@@ -50,18 +50,31 @@ fbq('track', 'PageView');
   }
   h1 {
     font-family: "Cormorant Garamond", Georgia, serif; font-weight: 700; color: var(--ink-3);
-    font-size: clamp(30px, 6.6vw, 46px); line-height: 1.14; margin: 0 0 16px;
+    font-size: clamp(32px, 7vw, 48px); line-height: 1.08; margin: 0 0 14px;
   }
-  .sub { font-size: 16.5px; line-height: 1.6; color: var(--brown); margin: 0 auto 30px; max-width: 42ch; }
-  a.go {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 100%; max-width: 280px; box-sizing: border-box;
-    border-radius: 999px; padding: 17px 30px; font-size: 16px; font-weight: 700;
-    text-decoration: none; color: #fffdf7;
+  .sub { font-size: 16.5px; line-height: 1.55; color: var(--brown); margin: 0 auto 22px; max-width: 36ch; }
+  form { margin: 0 auto; max-width: 400px; text-align: left; }
+  input[type=text], input[type=tel] {
+    width: 100%; box-sizing: border-box; font: inherit; font-size: 18px; font-weight: 600;
+    text-align: center; color: var(--ink-3); padding: 16px; border-radius: 14px;
+    background: #fffdf9; border: 1.5px solid var(--bronze); margin: 0 0 12px;
+  }
+  input:focus { outline: 3px solid var(--ink-3); outline-offset: 2px; }
+  .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.45; color: var(--brown); margin: 4px 0 16px; }
+  .consent input { margin-top: 2px; accent-color: var(--bronze-deep); }
+  button {
+    width: 100%; border: 0; cursor: pointer; border-radius: 999px; padding: 17px 24px;
+    font: inherit; font-size: 16px; font-weight: 700; color: #fffdf7;
     background: linear-gradient(180deg, var(--bronze-deep), #7d5a26);
     box-shadow: 0 10px 22px -10px rgba(143,104,47,.9), 0 1px 0 rgba(255,255,255,.28) inset;
   }
-  a.go[aria-disabled="true"] { opacity: .55; }
+  button[disabled] { opacity: .6; cursor: default; }
+  .err { min-height: 1.2em; margin: 10px 0 0; text-align: center; color: #a8452f; font-size: 14px; }
+  .done { display: none; }
+  .done h2 {
+    font-family: "Cormorant Garamond", Georgia, serif; font-weight: 700; color: var(--ink-3);
+    font-size: clamp(30px, 6vw, 42px); line-height: 1.12; margin: 0 0 12px;
+  }
 </style>
 </head>
 <body>
@@ -69,37 +82,70 @@ fbq('track', 'PageView');
   <div class="card">
     <p class="eyebrow">The Faith Made</p>
     <div class="rule"></div>
-    <h1>The Ethiopian Bible</h1>
-    <p class="sub">The complete Ethiopian canon. The books the Western Bible left out, bound in one volume. Emily texts you the page.</p>
-    <a class="go" id="go" href="#" aria-disabled="true">Text me the page</a>
+    <div id="ask">
+      <h1>The books they left out of the Bible.</h1>
+      <p class="sub">The complete Ethiopian canon, bound in one volume. A member of our team will personally text you the page.</p>
+      <form id="form">
+        <input type="text" id="name" name="name" autocomplete="given-name" placeholder="First name" maxlength="80" required>
+        <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="(555) 123-4567" maxlength="24" required>
+        <label class="consent"><input type="checkbox" id="consent"> A member of the team can text me about this. Reply STOP to end.</label>
+        <button type="submit" id="go">Have them text me</button>
+        <p class="err" id="err"></p>
+      </form>
+    </div>
+    <div class="done" id="done">
+      <h2>Watch your phone.</h2>
+      <p class="sub">A member of our team is reaching out now.</p>
+    </div>
   </div>
 </main>
 <noscript><img height="1" width="1" style="display:none" alt=""
   src="https://www.facebook.com/tr?id=1566647111816717&ev=PageView&noscript=1"></noscript>
 <script>
+var form = document.getElementById('form');
+var err = document.getElementById('err');
 var go = document.getElementById('go');
-var ready = false;
-function arm(cfg) {
-  if (!cfg || !cfg.enabled || !cfg.sms_number || !cfg.sms_body) return;
-  var body = cfg.sms_body;
-  if (body.toLowerCase().indexOf('send me the page') === -1) body += ' send me the page';
-  go.href = 'sms:' + cfg.sms_number + '?&body=' + encodeURIComponent(body);
-  go.removeAttribute('aria-disabled');
-  ready = true;
-}
-function load() {
-  return fetch('https://zobi.com/moneybag/sms/support/faithmade/config', { cache: 'no-store' })
-    .then(function (r) { return r.json(); })
-    .then(arm);
-}
-load();
-go.addEventListener('click', function (e) {
-  if (!ready) {
-    e.preventDefault();
-    load().then(function () { if (ready) window.location.href = go.href; });
-    return;
-  }
-  if (window.fbq) fbq('track', 'Lead');
+function digits(v){ return (v || '').replace(/\D/g, ''); }
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  err.textContent = '';
+  var name = document.getElementById('name').value.trim();
+  var raw = document.getElementById('phone').value.trim();
+  var d = digits(raw);
+  var phone = raw.charAt(0) === '+' ? '+' + d : d;
+  var ok = raw.charAt(0) === '+' ? (d.length >= 8 && d.length <= 15) : d.length === 10;
+  if (!name) { err.textContent = 'Please enter your name.'; return; }
+  if (!ok) { err.textContent = 'That number does not look right.'; return; }
+  if (!document.getElementById('consent').checked) { err.textContent = 'Check the box so we can text you.'; return; }
+  go.disabled = true;
+  go.textContent = 'Sending...';
+  var params = new URLSearchParams(location.search);
+  var utm = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+    .map(function (k) { return params.get(k) ? k + '=' + params.get(k) : ''; })
+    .filter(Boolean).join('&');
+  fetch('https://www.competencecollective.com/api/faithmade-lead', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      name: name, phone: phone, consent: true,
+      referrer: document.referrer || '', utm: utm
+    })
+  }).then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
+    .then(function (j) {
+      if (j && j.ok) {
+        if (window.fbq) fbq('track', 'Lead');
+        document.getElementById('ask').style.display = 'none';
+        document.getElementById('done').style.display = 'block';
+        return;
+      }
+      err.textContent = (j && j.error) || 'That did not go through. Try once more.';
+      go.disabled = false;
+      go.textContent = 'Have them text me';
+    }).catch(function () {
+      err.textContent = 'Connection hiccup. Try once more.';
+      go.disabled = false;
+      go.textContent = 'Have them text me';
+    });
 });
 </script>
 </body>
